@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/root
+    ports:
+      - 5050:5000
+
+    restart: unless-stopped
+    environment:
+      WAIT_HOSTS: db:27017
+
+  db:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: administrator
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data
+
+volumes:
+  mongo_data:
