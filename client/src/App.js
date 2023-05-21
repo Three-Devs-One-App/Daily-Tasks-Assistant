@@ -4,7 +4,7 @@ function App() {
   const [obj, setObj] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:5000/api")
+    fetch("http://localhost:8080/api") // Take the redirected port from docker composed
       .then((res) => res.json())
       .then((data) => setObj(data));
   }, []);
@@ -14,7 +14,7 @@ function App() {
   }
   return (
     <div>
-      <h1>{obj.channel}</h1>
+      <h2>{obj.channel}</h2>
       <h1>{obj.tutorial}</h1>
     </div>
   );
