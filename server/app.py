@@ -7,7 +7,7 @@ CORS(app)
 @app.route('/api', methods=['GET'])
 def index():
   return {
-    "channel": "The CCC",
+    "channel": "The BBB",
     "tutorial": "React, Flask and Docker"
   }
 
