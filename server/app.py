@@ -4,13 +4,14 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 CORS(app)
-client = MongoClient("mongodb+srv://jiaqicheng1104:ugDWOD0Oqvc9wVW5@dta.utdqct1.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://jiaqicheng1104:blM7TkA6NqY8n1vH@dta.p2gykgh.mongodb.net/?retryWrites=true&w=majority")
 
 db = client["DTA"]
 user_collection = db["user"]
 
 @app.route('/api', methods=['GET'])
 def index():
+  
   return {
     "channel": "The BBB",
     "tutorial": "React, Flask and Docker"
