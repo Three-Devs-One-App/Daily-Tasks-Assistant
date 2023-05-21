@@ -11,6 +11,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./client:/client
+      - ./client/src:/client/src
     depends_on:
       - server
