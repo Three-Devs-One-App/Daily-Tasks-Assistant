@@ -1,15 +1,15 @@
-version: "3.9"
+version: '3.9'
 services:
   server:
     build: ./server
     ports:
-      - "5000:5000"
+      - '5000:5000'
     volumes:
       - ./server:/server
   client:
     build: ./client
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./client/src:/client/src
     depends_on:

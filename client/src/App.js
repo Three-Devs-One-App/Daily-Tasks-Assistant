@@ -15,7 +15,7 @@ function App() {
   return (
     <div>
       <h1>{obj.channel}</h1>
-      <h1>{obj.tutorial}</h1>
+      <h2>{obj.tutorial}</h2>
     </div>
   );
 }
