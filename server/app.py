@@ -11,7 +11,6 @@ user_collection = db["user"]
 
 @app.route('/api', methods=['GET'])
 def index():
-  
   return {
     "channel": "The BBB",
     "tutorial": "React, Flask and Docker"
