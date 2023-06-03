@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import IntroPage from './AppComponent/AppComponent.js';
+import IntroPage from "./AppComponent/AppComponent.js";
 
 function App() {
   return (
