@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   server:
     build: ./server
@@ -8,6 +8,8 @@ services:
       - ./server:/server
   client:
     build: ./client
+    environment:
+      WDS_SOCKET_PORT: 3030
     ports:
       - "3030:3000"
     volumes:
