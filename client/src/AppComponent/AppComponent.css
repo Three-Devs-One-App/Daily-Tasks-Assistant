@@ -1,13 +1,4 @@
-.AppComponent {
-    /* This sets a background image */
-    background-image: url("./background.png");
-    background-size: auto;
-    
-  
-    min-height: 100vh;  /* This makes sure your App takes up the full height of the viewport */
-    margin: 0;  /* This removes any default margin */
-  }
-  .AppComponent h1 {
+ h1 {
     position: absolute;
   width: 1000px;
   height: 100px;
@@ -21,7 +12,28 @@
   line-height: 50px;
     color: rgb(252, 252, 248);
   }
+  button{
+    font-family: 'Inter';
+  font-style: normal;
+  font-size: medium;
+  color: rgb(252, 252, 248);
   
+  background: rgba(217, 217, 217, 0.5);
+  }
+  form{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+
+    color: #FFFFFF;
+  }
+  input{
+    background-color: rgb(210, 214, 243);
+    font-size: 50%;
+    height: 10%;
+    top:10%;
+  }
   .AppComponent h2 {
     position: absolute;
     width: 750px;
@@ -51,7 +63,7 @@
   line-height: 40px;
     color: rgb(252, 252, 248);
   }
-  
+
   #signup{
     position: absolute;
   width: 200px;
@@ -59,11 +71,6 @@
   left: 175px;
   top: 496px;
   
-  font-family: 'Inter';
-  font-style: normal;
-  color: rgb(252, 252, 248);
-  
-  background: rgba(217, 217, 217, 0.5);
   }
   #signin{
   position: absolute;
@@ -71,10 +78,4 @@
   height: 50px;
   left: 410px;
   top: 496px;
-  
-  font-family: 'Inter';
-  font-style: normal;
-  color: rgb(252, 252, 248);
-  
-  background: rgba(217, 217, 217, 0.5);
   }

@@ -1,0 +1,39 @@
+#App_name{
+    position: absolute;
+width: 1000px;
+height: 125px;
+left: 175px;
+top: 40px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 88px;
+line-height: 106px;
+
+color: #FFFFFF;
+}
+#Already_User{
+    position: absolute;
+    width:12%;
+    height: 10%;
+    left:26%;
+    top: 65%;
+    
+}
+#loginForm{
+    position: absolute;
+    width:30%;
+    height: 30%;
+    left:12%;
+    top: 25%;
+
+    line-height: 150%;
+}
+#submitSignclick{
+    position: absolute;
+    width:32%;
+    height: 34%;
+    left:0%;
+    top: 133%;
+}
