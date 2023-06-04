@@ -1,10 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IntroPage from './AppComponent/AppComponent.js';
 import Signup from './AppComponent/SignUp.js';
 import Profile from './AppComponent/Profile.js';
+import ForgetPasswordPage from "./AppComponent/ForgetPasswordPage/ForgetPasswordPage.js";
 import './App.css'
-
 function App() {
 
   const [state, setState] = useState('Intro');//debug use for default setting signup page
@@ -42,6 +42,7 @@ function App() {
       {state === 'SignUp' && <Signup alreadysignclick={handleClickAlreadySignUp}  submitSignclick={handleUserSignUp}/>}
       {state === 'Al-SignUp' && <IntroPage signupClicked={handleClickSignUp} />}
       {state === 'profile' && <Profile user={user} />}
+      {state==='Forget'&&<ForgetPasswordPage />}
     </div>
   );//the al-signup is temperaily change to intro page now
 }
