@@ -4,12 +4,10 @@ const ForgetPasswordPage = () => {
 
   return (
     <div className="forget-page-div">
-      <h1>Daily Task Manager</h1>
-      <div className="email-div">
-        <h3>Email:</h3>
-        <input tpye="text" placeholder="Enter Email Here" />
-      </div>
-      <button onClick={handleBtn}>Reset Password</button>
+      <h1>Daily Task Assistant</h1>
+      <h3 id="e3">Email:</h3>
+      <input id="enterEmail" type="text" placeholder="Enter Email Here" />
+      <button id="ResetButton" onClick={handleBtn}>Reset Password</button>
     </div>
   );
 };

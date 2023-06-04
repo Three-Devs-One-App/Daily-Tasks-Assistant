@@ -13,9 +13,12 @@ function App() {
     const handleClickSignUp = () => {
         setState('SignUp');
       }
-      const handleClickAlreadySignUp = () => {
+    const handleClickAlreadySignUp = () => {
         setState('Al-SignUp');
       }
+    const handleClickForget = () =>{
+        setState('Forget');
+    }
       const handleUserSignUp = (inputData) => {
         setuser(inputData);
         setState('profile');
@@ -38,9 +41,9 @@ function App() {
 
   return (
     <div className="App">
-      {state === 'Intro' && <IntroPage signupClicked={handleClickSignUp} />}
+      {state === 'Intro' && <IntroPage signupClicked={handleClickSignUp} forgetClicked={handleClickForget}/>}
       {state === 'SignUp' && <Signup alreadysignclick={handleClickAlreadySignUp}  submitSignclick={handleUserSignUp}/>}
-      {state === 'Al-SignUp' && <IntroPage signupClicked={handleClickSignUp} />}
+      {state === 'Al-SignUp' && <IntroPage signupClicked={handleClickSignUp} forgetClicked={handleClickForget}/>}
       {state === 'profile' && <Profile user={user} />}
       {state==='Forget'&&<ForgetPasswordPage />}
     </div>

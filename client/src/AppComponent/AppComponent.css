@@ -3,7 +3,7 @@
   width: 1000px;
   height: 100px;
   left: 175px;
-  top: 40px;
+  top: 10%;
   
   font-family: 'Inter';
   font-style: normal;
@@ -78,4 +78,11 @@
   height: 50px;
   left: 410px;
   top: 496px;
+  }
+  #forgetP{
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    left: 50%;
+    top: 496px;
   }
