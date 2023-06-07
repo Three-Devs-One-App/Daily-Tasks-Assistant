@@ -38,5 +38,21 @@ def user_create():
   
   return jsonify({'message': 'User created successfully'}), 200
 
+@app.route('/Profile', methods=['POST','GET'])
+def user_Login():
+  data = request.get_json()
+  
+  if not data:
+      return jsonify({'message': 'No input data provided'}), 400
+  
+  username = data.get('Username')
+  password = data.get('Password')
+  
+  if not all([username,password]):
+    return jsonify({'message': 'Missing data'}), 400
+  
+  
+  return jsonify({'message': 'User Login successfully'}), 200
+
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port="8000")

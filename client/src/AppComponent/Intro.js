@@ -1,7 +1,7 @@
 import React from 'react';
 import './AppComponent.css';
 
-function IntroPage({signupClicked,forgetClicked}){
+function IntroPage({signupClicked,SignInClicked,forgetClicked}){
 
     
     return(
@@ -12,7 +12,7 @@ function IntroPage({signupClicked,forgetClicked}){
             By:{<br />}Jiaqi Cheng{<br />}Zuxiang Wang{<br />}Siliang Lihuang
         </h3>
         <button id="signup" onClick={signupClicked}>Get Started</button>
-        <button id="signin">Sign In</button>
+        <button id="signin" onClick={SignInClicked}>Sign In</button>
         <button id="forgetP" onClick={forgetClicked}>Forget Password</button>
     </div>
     );

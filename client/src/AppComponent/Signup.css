@@ -37,3 +37,12 @@ color: #FFFFFF;
     left:0%;
     top: 133%;
 }
+#warning{
+    position: absolute;
+    width:32%;
+    height: 34%;
+    left:12%;
+    top: 52%;
+
+    color: aquamarine;
+}
