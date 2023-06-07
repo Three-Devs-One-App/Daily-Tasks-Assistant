@@ -18,15 +18,18 @@ function App() {
     const SignInClicked = () =>{
         setState('Login');
     }
-    
+    const handleClickAlreadySignUp = () => {
+        setState('Login');
+      }
     const handleClickForget = () =>{
         setState('Forget');
     }
     const handleUserSignUp = (inputData) => {
+
         setuser(inputData);
         setState('profile');
 
-        console.log("fail but still goes in here")
+        console.log("success")
         
         fetch('http://localhost:8080/user', {
           method: 'POST', //communicate to backend
@@ -42,9 +45,9 @@ function App() {
         .catch((error) => {
           console.error('Error:', error);
         });
+      
     }
     const handleClickLogin = (UserData) =>{
-
         setuser(UserData);
         setState('profile');
         
@@ -62,13 +65,14 @@ function App() {
         .catch((error) => {
           console.error('Error:', error);
         });
+      
     }
 
 
   return (
     <div className="App">
       {state === 'Intro' && <IntroPage signupClicked={handleClickSignUp} SignInClicked={SignInClicked} forgetClicked={handleClickForget}/>}
-      {state === 'SignUp' && <Signup   submitSignclick={handleUserSignUp} setState={setState} />}
+      {state === 'SignUp' && <Signup alreadysignclick={handleClickAlreadySignUp}  submitSignclick={handleUserSignUp} />}
       {state === 'Login' && <Login ClickLogin={handleClickLogin} SignupClicked={handleClickSignUp} />}
       {state === 'profile' && <Profile user={user} />}
       {state==='Forget'&&<ForgetPasswordPage />}

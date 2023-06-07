@@ -39,10 +39,12 @@ color: #FFFFFF;
 }
 #warning{
     position: absolute;
-    width:32%;
+    width:50%;
     height: 34%;
-    left:12%;
-    top: 52%;
+    left:0%;
+    top: 100%;
+
+    font-size: medium;
 
     color: aquamarine;
 }
