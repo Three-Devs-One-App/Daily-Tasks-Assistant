@@ -1,8 +1,7 @@
 .App {
-  background-image: url("./AppComponent/background.png");
-    background-size: auto;
-    
-  
-    min-height: 100vh;  /* This makes sure your App takes up the full height of the viewport */
-    margin: 0;  /* This removes any default margin */
+  background-image: url("./Pictures/background.png");
+  background-size: auto;
+
+  min-height: 100vh; /* This makes sure your App takes up the full height of the viewport */
+  margin: 0; /* This removes any default margin */
 }

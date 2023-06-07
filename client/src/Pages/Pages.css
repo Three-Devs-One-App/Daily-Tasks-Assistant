@@ -1,0 +1,169 @@
+/* Pages CSS */
+h1 {
+  position: absolute;
+  width: 1000px;
+  height: 100px;
+  left: 175px;
+  top: 10%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 50px;
+  color: rgb(252, 252, 248);
+}
+button {
+  font-family: "Inter";
+  font-style: normal;
+  font-size: medium;
+  color: rgb(252, 252, 248);
+  background: rgba(217, 217, 217, 0.5);
+}
+form {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  width: 50%;
+
+  color: #ffffff;
+}
+input {
+  background-color: rgb(210, 214, 243);
+  font-size: 50%;
+  height: 10%;
+  top: 10%;
+}
+.AppComponent h2 {
+  position: absolute;
+  width: 750px;
+  height: 40px;
+  left: 179px;
+  top: 175px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 39px;
+  line-height: 10px;
+  color: rgb(252, 252, 248);
+}
+
+.AppComponent h3 {
+  position: absolute;
+  width: 300px;
+  height: 40px;
+  left: 180px;
+  top: 250px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 33px;
+  line-height: 40px;
+  color: rgb(252, 252, 248);
+}
+
+#signup {
+  position: absolute;
+  width: 200px;
+  height: 50px;
+  left: 175px;
+  top: 496px;
+}
+#signin {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  left: 410px;
+  top: 496px;
+}
+#forgetP {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  left: 50%;
+  top: 496px;
+}
+
+/* Sign Up CSS */
+#App_name {
+  position: absolute;
+  width: 1000px;
+  height: 125px;
+  left: 175px;
+  top: 40px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 88px;
+  line-height: 106px;
+
+  color: #ffffff;
+}
+#Already_User {
+  position: absolute;
+  width: 12%;
+  height: 10%;
+  left: 26%;
+  top: 65%;
+}
+#loginForm {
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  left: 12%;
+  top: 25%;
+
+  line-height: 150%;
+}
+#submitSignclick {
+  position: absolute;
+  width: 32%;
+  height: 34%;
+  left: 0%;
+  top: 133%;
+}
+#warning {
+  position: absolute;
+  width: 50%;
+  height: 34%;
+  left: 0%;
+  top: 100%;
+
+  font-size: medium;
+
+  color: aquamarine;
+}
+
+/* Forget Password CSS */
+#e3 {
+  position: absolute;
+  width: 12%;
+  height: 10%;
+  left: 11.8%;
+  top: 30%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 300%;
+  line-height: 40px;
+  color: rgb(252, 252, 248);
+}
+#enterEmail {
+  position: absolute;
+  width: 15%;
+  height: 5%;
+  left: 22%;
+  top: 31%;
+}
+#ResetButton {
+  position: absolute;
+  width: 12%;
+  height: 6%;
+  left: 11.8%;
+  top: 47%;
+}
