@@ -16,7 +16,7 @@ profile_collection = db["profile"]
 token_collection = db["token"]
 
 # oauth meta
-from flask import url_for, redirect
+from flask import url_for, redirect,render_template
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from email.message import EmailMessage
@@ -110,23 +110,22 @@ def user_Login():
   return jsonify({'message': 'User Login successfully'}), 200
 
 
-# forget password routes and logic
-
+#############################################
+#                                           #
+#     forget password routes and logic      #
+#                                           #
+#############################################
 @app.route('/forget-password', methods=['POST'])
 def forget_password_req():
-  print('Request received for email',flush=True)
-  
   data = request.get_json()
   inp_email = data['email']
   
   if inp_email == None:
-    print('No email provided！', flush=True)
     return jsonify({'message': 'No email provided'}), 400
   
   user = user_collection.find_one({'Email': inp_email})
   
   if user == None:
-    print('Email {} not found！'.format(inp_email), flush=True)
     return jsonify({'message': 'Email not found in database'}), 400
   
   send_reset_link(inp_email)
@@ -135,12 +134,10 @@ def forget_password_req():
 
 
 def send_reset_link(email):
-  
-  print('sending reset link',flush=True)
   token = token_collection.find_one({'name': 'googleSendEmail'})
-  reset_token = secrets.token_urlsafe(32)
   
-  print('Creating credentials',flush=True)
+  reset_token = create_reset_token(email)
+  
   creds = credentials.Credentials(
     token=token["access_token"],
     refresh_token=token["refresh_token"],
@@ -150,14 +147,32 @@ def send_reset_link(email):
     scopes=['https://www.googleapis.com/auth/gmail.send']
   )
   
-  print('creating service',flush=True)
   service = build('gmail','v1',credentials=creds)
-  
-  print('Creating email',flush=True)
   encoded_email = create_reset_email(reset_token,email)
-  
-  print('Sending email',flush=True)
   (service.users().messages().send(userId="me", body=encoded_email).execute())
+
+
+# creates and stores reset token
+def create_reset_token(email):
+  
+  ret = secrets.token_urlsafe(32)
+  
+  # expire time for the token is 1 hour
+  expires_at = datetime.now().timestamp() + 3600
+  token_type = "reset_token"
+  reset_token = ret
+  user = user_collection.find_one({'Email': email})
+  
+  new_tok = {
+    'reset_token': reset_token,
+    'expires_at': expires_at,
+    'token_type': token_type,
+    'user': user['_id']
+  }
+  
+  token_collection.insert_one(new_tok)
+  
+  return ret
 
 
 def create_reset_email(reset_token, receiver):
@@ -165,7 +180,7 @@ def create_reset_email(reset_token, receiver):
   email['To'] = receiver
   email['From'] = 'dta672023@gmail.com'
   email['Subject'] = "Password Reset for Daily Task Assistant"
-  email.set_content("Hello, this daily task assistant. Please click the following link to change your password: http://localhost:8080/reset-password/{}".format(reset_token))
+  email.set_content("Hello, this daily task assistant, \n Please click the following link to change your password:\n http://localhost:8080/reset-password/{}\n The link will expire in one hour".format(reset_token))
   
   encoded_message = base64.urlsafe_b64encode(email.as_bytes()).decode()
   return {
@@ -175,7 +190,36 @@ def create_reset_email(reset_token, receiver):
 
 @app.route('/reset-password/<reset_token>', methods=['GET','POST'])
 def reset_password(reset_token):
-  return jsonify({'message': reset_token}), 200
+  
+  if request.method == 'GET':
+    token = token_collection.find_one({'reset_token': reset_token})
+    
+    if token == None or datetime.now().timestamp() > token['expires_at']:
+      
+      if(token != None):
+        token_collection.delete_one({'_id': token['_id']})
+      
+      return render_template('link-expired.html')
+    
+    return render_template('reset-password.html', reset_token=reset_token, message="")
+  
+  elif request.method == 'POST':
+    
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+    
+    if new_password != confirm_password:
+      return render_template('reset-password.html', reset_token=reset_token, message="Passwords must be the same!")
+    
+    token = token_collection.find_one({'reset_token': reset_token})
+    user_id = token['user']
+    
+    user_collection.update_one({'_id': user_id}, { '$set': {'PassWord': new_password}})
+    token_collection.delete_one({'_id': token['_id']})
+    
+    return redirect('http://localhost:3030/')
+
+  return jsonify({'message': 'invalid request method'}), 400
 
 # # uncomment the following two routes and send a request to 
 # /send-email-setup logged in as admin gmail 
