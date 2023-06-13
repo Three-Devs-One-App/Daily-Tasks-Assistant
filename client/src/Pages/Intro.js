@@ -11,7 +11,7 @@ function IntroPage({ setPage }) {
   };
 
   const handleForgetClicked = () => {
-    setPage("ForgetPassword");
+    setPage("Forget");
   };
 
   return (
