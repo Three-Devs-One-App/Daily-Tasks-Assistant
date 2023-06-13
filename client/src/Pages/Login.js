@@ -14,6 +14,7 @@ function Login({ setPage,sessionStatus}) {
     event.preventDefault();
     const response = await fetch('http://localhost:8080/Login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
