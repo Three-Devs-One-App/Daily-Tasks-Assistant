@@ -65,15 +65,6 @@ oauth.register(
 
 # routes
 
-@app.route('/api', methods=['GET'])
-@cross_origin(supports_credentials=True)
-def index():
-  
-  return {
-    "channel": "The BBB",
-    "tutorial": "React, Flask and Docker"
-  }
-  
 @app.route('/user', methods=['POST','GET'])
 @cross_origin(supports_credentials=True)
 def user_create():
@@ -94,7 +85,8 @@ def user_create():
   
   return jsonify({'message': 'User created successfully'}), 200
 
-@app.route('/Profile', methods=['POST','GET'])
+@app.route('/Login', methods=['POST','GET'])
+@cross_origin(supports_credentials=True)
 def user_Login():
 
   data = request.get_json()
@@ -110,8 +102,36 @@ def user_Login():
   if not all([username,password]):
     return jsonify({'login': 'Missing data'}), 400
   
-  
-  return jsonify({'message': 'User Login successfully'}), 200
+  user = user_collection.find_one({'Username':username})
+
+  if user:
+     if user['PassWord'] == password:
+        print(user['Username'],flush=True)
+        session['username'] = user['Username']
+        username = user['Username']
+        print(session['username'],flush=True)
+        return jsonify({'login': 'User Login successfully'}), 200
+     else:
+       return jsonify({'login': 'Username/Password incorrect'}) , 400
+  return jsonify({'login': 'User Not Found'}), 400
+
+@app.route('/Logout', methods=['POST','GET'])
+@cross_origin(supports_credentials=True)
+def user_Logout():
+    print("logout called",flush=True)
+    session.pop('username',None)
+    print('username' in session)
+    return jsonify({'login': 'User Logout successfully'}), 200
+
+@app.route('/check-login', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def check_login():
+    print("check_login called",flush=True)
+    if 'username' in session:
+        print(session['username'],flush=True)
+        return jsonify({'loggedIn': True})
+    print("username not in session",flush=True)
+    return jsonify({'loggedIn': False})
 
 
 #############################################
@@ -225,39 +245,41 @@ def reset_password(reset_token):
 
   return jsonify({'message': 'invalid request method'}), 400
 
-# # uncomment the following two routes and send a request to 
+# uncomment the following two routes and send a request to 
 # /send-email-setup logged in as admin gmail 
-# # to setup access token for admins
-# @app.route('/send-email-setup')
-# def send_mail_setup():
-#     redirect_uri = url_for('send_mail_auth', _external=True)
-#     return oauth.googleSendEmail.authorize_redirect(redirect_uri)
+# to setup access token for admins
+# *** Make sure to delete the old token first! ***
+# note to self - may need to implement the above to do automatic
+@app.route('/send-email-setup')
+def send_mail_setup():
+    redirect_uri = url_for('send_mail_auth', _external=True)
+    return oauth.googleSendEmail.authorize_redirect(redirect_uri)
 
 
-# @app.route('/send-email-auth')
-# def send_mail_auth():
-#     token = oauth.googleSendEmail.authorize_access_token()
+@app.route('/send-email-auth')
+def send_mail_auth():
+    token = oauth.googleSendEmail.authorize_access_token()
     
-#     name = "googleSendEmail"
-#     access_token = token["access_token"]
-#     refresh_token = token["refresh_token"]
-#     expires_at = token["expires_at"]
-#     token_type = token["token_type"]
-#     user = user_collection.find_one({"Username": "admin"})
+    name = "googleSendEmail"
+    access_token = token["access_token"]
+    refresh_token = token["refresh_token"]
+    expires_at = token["expires_at"]
+    token_type = token["token_type"]
+    user = user_collection.find_one({"Username": "admin"})
     
-#     print(user, flush=True)
+    print(user, flush=True)
     
-#     new_token = {
-#       "name": name,
-#       "access_token": access_token,
-#       "refresh_token": refresh_token,
-#       "expires_at": expires_at,
-#       "token_type": token_type,
-#       "user": user["_id"]
-#     }
+    new_token = {
+      "name": name,
+      "access_token": access_token,
+      "refresh_token": refresh_token,
+      "expires_at": expires_at,
+      "token_type": token_type,
+      "user": user["_id"]
+    }
     
-#     token_collection.insert_one(new_token)
-#     return jsonify({'message': 'Success'}), 200
+    token_collection.insert_one(new_token)
+    return jsonify({'message': 'Success'}), 200
 
 
 if __name__ == '__main__':

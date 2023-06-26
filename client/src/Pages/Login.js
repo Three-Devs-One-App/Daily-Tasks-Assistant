@@ -11,24 +11,28 @@ function Login({ setPage, sessionStatus }) {
   };
 
   const handleLoginReq = async () => {
-    const response = await fetch("http://localhost:8080/Login", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Username,
-        Password,
-      }),
-    });
+    try {
+      const response = await fetch("http://localhost:8080/Login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Username,
+          Password,
+        }),
+      });
 
-    const data = await response.json();
-    if (data.login === "User Login successfully") {
-      sessionStatus((currentValue) => !currentValue);
-      setPage("Profile");
-    } else {
-      setWarning(data.login);
+      const data = await response.json();
+      if (data.login === "User Login successfully") {
+        sessionStatus((currentValue) => !currentValue);
+        setPage("Profile");
+      } else {
+        setWarning(data.login);
+      }
+    } catch (error) {
+      window.alert("Something went wrong while fetching/processing your data");
     }
   };
 
