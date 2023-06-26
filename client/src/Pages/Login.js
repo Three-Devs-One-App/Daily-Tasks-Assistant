@@ -1,39 +1,40 @@
 import React, { useState } from "react";
 import "./Pages.css";
 
-function Login({ setPage }) {
+function Login({ setPage, sessionStatus }) {
   const [Username, setUsername] = useState("");
   const [Password, setPassWord] = useState("");
-
-  const handleClickLogin = (UserData) => {
-    fetch("http://localhost:8080/Profile", {
-      method: "POST", //communicate to backend
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(UserData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    setPage("Profile");
-  };
+  const [warning, setWarning] = useState("");
 
   const handleClickSignUp = () => {
     setPage("SignUp");
   };
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const UserData = {
-      Username,
-      Password,
-    };
-    handleClickLogin(UserData);
+  const handleLoginReq = async () => {
+    const response = await fetch("http://localhost:8080/Login", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Username,
+        Password,
+      }),
+    });
+
+    const data = await response.json();
+    if (data.login === "User Login successfully") {
+      sessionStatus((currentValue) => !currentValue);
+      setPage("Profile");
+    } else {
+      setWarning(data.login);
+    }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    handleLoginReq();
   };
 
   return (
@@ -57,9 +58,12 @@ function Login({ setPage }) {
         />
         <br />
         <u onClick={handleClickSignUp}>Need to Sign Up? Click Here</u>
+        <br />
         <button type="submit" id="Loginclick">
           Login
         </button>
+        <br />
+        {warning && <p id="warning">{warning}</p>}
       </form>
     </div>
   );

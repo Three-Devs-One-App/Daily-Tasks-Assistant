@@ -1,13 +1,13 @@
 # Server Initial Setup
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify, session,redirect,url_for
+from flask_cors import CORS, cross_origin
+
+from flask_session import Session
 from pymongo import MongoClient
 
 # Flask and CORS setup
 app = Flask(__name__)
 CORS(app)
-
-# Database Connection and Setup
 client = MongoClient("mongodb+srv://jiaqicheng1104:blM7TkA6NqY8n1vH@dta.p2gykgh.mongodb.net/?retryWrites=true&w=majority")
 db = client["DTA"]
 
@@ -66,15 +66,16 @@ oauth.register(
 # routes
 
 @app.route('/api', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def index():
   
   return {
     "channel": "The BBB",
     "tutorial": "React, Flask and Docker"
   }
-
-
+  
 @app.route('/user', methods=['POST','GET'])
+@cross_origin(supports_credentials=True)
 def user_create():
   data = request.get_json()
   
@@ -93,19 +94,22 @@ def user_create():
   
   return jsonify({'message': 'User created successfully'}), 200
 
-
 @app.route('/Profile', methods=['POST','GET'])
 def user_Login():
+
   data = request.get_json()
-  
+
+
   if not data:
-      return jsonify({'message': 'No input data provided'}), 400
+      return jsonify({'login': 'No input data provided'}), 400
   
   username = data.get('Username')
   password = data.get('Password')
+
   
   if not all([username,password]):
-    return jsonify({'message': 'Missing data'}), 400
+    return jsonify({'login': 'Missing data'}), 400
+  
   
   return jsonify({'message': 'User Login successfully'}), 200
 

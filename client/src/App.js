@@ -1,109 +1,44 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import IntroPage from "./Pages/Intro.js";
 import SignUp from "./Pages/SignUp.js";
 import Login from "./Pages/Login.js";
+import Profile from "./Pages/Profile.js";
 import ForgetPasswordPage from "./Pages/ForgetPasswordPage.js";
 import "./App.css";
 
 const App = () => {
   const [Page, setPage] = useState("");
 
+  const [loggedIn,setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/check-login',{ credentials: 'include' })
+      .then(response => response.json())
+      .then(data => {
+        setLoggedIn(data.loggedIn);
+        console.log(data.loggedIn)
+        console.log("inside useeffect change")
+      })
+      .catch(error => {
+        console.error('Error checking login state', error);
+      });
+  }, [Page]);
+
+  const handleSessionChange= (value) => {
+    setLoggedIn(value);
+  };
+
+
   return (
     <div className="App">
-      {Page === "" && <IntroPage setPage={setPage} />}
-      {Page === "SignUp" && <SignUp setPage={setPage} />}
-      {Page === "Login" && <Login setPage={setPage} />}
-      {Page === "Forget" && <ForgetPasswordPage setPage={setPage} />}
+      {!loggedIn && Page === "" && <IntroPage setPage={setPage} />}
+      {!loggedIn &&Page === "SignUp" && <SignUp setPage={setPage} />}
+      {!loggedIn &&Page === "Login" && <Login setPage={setPage} sessionStatus={handleSessionChange} />}
+      {!loggedIn &&Page === "ForgetPassword" && <ForgetPasswordPage setPage={setPage} />}
+      {(loggedIn ||Page === "Profile") && <Profile setPage={setPage} setLoggedIn={setLoggedIn}/>}
     </div>
   );
 };
-
-/*
-function App() {
-  const [state, setState] = useState("SignUp"); //debug use for default setting signup page
-
-  const [user, setuser] = useState({});
-
-  const handleClickSignUp = () => {
-    setState("SignUp");
-  };
-  const SignInClicked = () => {
-    setState("Login");
-  };
-  const handleClickAlreadySignUp = () => {
-    setState("Login");
-  };
-  const handleClickForget = () => {
-    setState("Forget");
-  };
-  const handleUserSignUp = (inputData) => {
-    setuser(inputData);
-    setState("profile");
-
-    console.log("success");
-
-    fetch("http://localhost:8080/user", {
-      method: "POST", //communicate to backend
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  const handleClickLogin = (UserData) => {
-    setuser(UserData);
-    setState("profile");
-
-    fetch("http://localhost:8080/Profile", {
-      method: "POST", //communicate to backend
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(UserData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  return (
-    <div className="App">
-      {state === "Intro" && (
-        <IntroPage
-          signupClicked={handleClickSignUp}
-          SignInClicked={SignInClicked}
-          forgetClicked={handleClickForget}
-        />
-      )}
-      {state === "SignUp" && (
-        <Signup
-          alreadysignclick={handleClickAlreadySignUp}
-          submitSignclick={handleUserSignUp}
-        />
-      )}
-      {state === "Login" && (
-        <Login
-          ClickLogin={handleClickLogin}
-          SignupClicked={handleClickSignUp}
-        />
-      )}
-      {state === "profile" && <Profile user={user} />}
-      {state === "Forget" && <ForgetPasswordPage />}
-    </div>
-  ); //the al-signup is temperaily change to intro page now
-}
-*/
 
 export default App;
