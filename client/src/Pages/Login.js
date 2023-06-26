@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Pages.css";
 
-function Login({ setPage,sessionStatus}) {
+function Login({ setPage, sessionStatus }) {
   const [Username, setUsername] = useState("");
   const [Password, setPassWord] = useState("");
   const [warning, setWarning] = useState("");
@@ -9,29 +9,32 @@ function Login({ setPage,sessionStatus}) {
   const handleClickSignUp = () => {
     setPage("SignUp");
   };
- 
-  const handleLogin = async(event) => {
-    event.preventDefault();
-    const response = await fetch('http://localhost:8080/Login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          Username,
-          Password
-        }),
+
+  const handleLoginReq = async () => {
+    const response = await fetch("http://localhost:8080/Login", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Username,
+        Password,
+      }),
     });
 
     const data = await response.json();
-    if (data.login === 'User Login successfully'){
+    if (data.login === "User Login successfully") {
       sessionStatus((currentValue) => !currentValue);
       setPage("Profile");
-    }
-    else{
+    } else {
       setWarning(data.login);
     }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    handleLoginReq();
   };
 
   return (
