@@ -5,6 +5,7 @@ import SignUp from "./Pages/SignUp.js";
 import Login from "./Pages/Login.js";
 import Profile from "./Pages/Profile.js";
 import ForgetPasswordPage from "./Pages/ForgetPasswordPage.js";
+import Task from "./Pages/Task.js"
 import "./App.css";
 
 const App = () => {
@@ -36,7 +37,8 @@ const App = () => {
       {!loggedIn &&Page === "SignUp" && <SignUp setPage={setPage} />}
       {!loggedIn &&Page === "Login" && <Login setPage={setPage} sessionStatus={handleSessionChange} />}
       {!loggedIn &&Page === "ForgetPassword" && <ForgetPasswordPage setPage={setPage} />}
-      {(loggedIn ||Page === "Profile") && <Profile setPage={setPage} setLoggedIn={setLoggedIn}/>}
+      {(loggedIn &&(Page === "Profile"||Page==="")) && <Profile setPage={setPage} setLoggedIn={setLoggedIn}/>}
+      {(loggedIn &&Page === "Task") && <Task setPage={setPage}/>}
     </div>
   );
 };

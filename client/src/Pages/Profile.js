@@ -22,6 +22,10 @@ function Profile({ setPage, setLoggedIn }) {
       .catch((error) => console.log("There was an error!", error));
   };
 
+  const handleNewTask = () =>{
+    setPage("Task");
+  }
+
   useEffect(() => {
     fetch("http://localhost:8080/check-login", { credentials: "include" })
       .then((response) => response.json())
@@ -39,7 +43,13 @@ function Profile({ setPage, setLoggedIn }) {
       <h1>Testing Page</h1>
       <button id="Logout" onClick={handleClickLogout}>
         {" "}
-        Logout{" "}
+        Logout
+        {" "}
+      </button>
+      <button id="NewTask" onClick={handleNewTask}>
+        {" "}
+        New Task
+        {" "}
       </button>
     </div>
   );

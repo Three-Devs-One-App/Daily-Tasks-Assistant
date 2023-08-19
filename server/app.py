@@ -98,6 +98,33 @@ def check_login():
     print("username not in session",flush=True)
     return jsonify({'loggedIn': False})
 
+@app.route('/Task', methods=['POST','GET'])
+@cross_origin(supports_credentials=True)
+def user_Task():
+  data = request.get_json()
+  
+  Task_Name=data.get('Task_Name')
+  Task_Priority=data.get('Task_Priority')
+  Task_Description=data.get('Task_Description')
+
+  response = user_collection.update_one(
+        {"Username": session['username']},
+        {
+            "$push": {
+                "tasks": {
+                    "name": Task_Name,
+                    "priority": Task_Priority,
+                    "description": Task_Description
+                }
+            }
+        }
+    )
+
+  if response.modified_count == 1:
+    return jsonify({'message': 'TaskAdded'}), 200
+  else:
+    return jsonify({'message': 'Failed to add task'}), 500
+
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port="8000")
