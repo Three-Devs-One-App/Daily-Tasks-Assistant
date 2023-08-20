@@ -14,6 +14,7 @@ db = client["DTA"]
 user_collection = db["user"]
 profile_collection = db["profile"]
 token_collection = db["token"]
+task_collection = db["task"]
 
 # oauth meta
 from flask import url_for, redirect,render_template
@@ -136,29 +137,36 @@ def check_login():
 @app.route('/Task', methods=['POST','GET'])
 @cross_origin(supports_credentials=True)
 def user_Task():
-  data = request.get_json()
-  
-  Task_Name=data.get('Task_Name')
-  Task_Priority=data.get('Task_Priority')
-  Task_Description=data.get('Task_Description')
-
-  response = user_collection.update_one(
-        {"Username": session['username']},
-        {
-            "$push": {
-                "tasks": {
-                    "name": Task_Name,
-                    "priority": Task_Priority,
-                    "description": Task_Description
-                }
-            }
-        }
-    )
-
-  if response.modified_count == 1:
-    return jsonify({'message': 'TaskAdded'}), 200
+  if request.method == 'POST':
+    data = request.get_json()
+    Task_Name=data.get('Task_Name')
+    Task_Date=data.get('Task_Date')
+    Task_Description=data.get('Task_Description')
+    
+    response = task_collection.insert_one({
+      'title': Task_Name,
+      'description': Task_Description,
+      'due_date': Task_Date
+    })
+    
+    id = response.inserted_id
+      
+    response = user_collection.update_one(
+          {"Username": session['username']},
+          {
+              "$push": {
+                  "tasks": id
+              }
+          }
+      )
+    
+    if response.modified_count == 1:
+      return jsonify({'message': 'TaskAdded'}), 200
+    else:
+      return jsonify({'message': 'Failed to add task'}), 500
+    
   else:
-    return jsonify({'message': 'Failed to add task'}), 500
+    return jsonify({'message': 'method not implemented'}), 500
 
 
 #############################################
@@ -277,36 +285,36 @@ def reset_password(reset_token):
 # to setup access token for admins
 # *** Make sure to delete the old token first! ***
 # note to self - may need to implement the above to do automatic
-@app.route('/send-email-setup')
-def send_mail_setup():
-    redirect_uri = url_for('send_mail_auth', _external=True)
-    return oauth.googleSendEmail.authorize_redirect(redirect_uri)
+# @app.route('/send-email-setup')
+# def send_mail_setup():
+#     redirect_uri = url_for('send_mail_auth', _external=True)
+#     return oauth.googleSendEmail.authorize_redirect(redirect_uri)
 
 
-@app.route('/send-email-auth')
-def send_mail_auth():
-    token = oauth.googleSendEmail.authorize_access_token()
+# @app.route('/send-email-auth')
+# def send_mail_auth():
+#     token = oauth.googleSendEmail.authorize_access_token()
     
-    name = "googleSendEmail"
-    access_token = token["access_token"]
-    refresh_token = token["refresh_token"]
-    expires_at = token["expires_at"]
-    token_type = token["token_type"]
-    user = user_collection.find_one({"Username": "admin"})
+#     name = "googleSendEmail"
+#     access_token = token["access_token"]
+#     refresh_token = token["refresh_token"]
+#     expires_at = token["expires_at"]
+#     token_type = token["token_type"]
+#     user = user_collection.find_one({"Username": "admin"})
     
-    print(user, flush=True)
+#     print(user, flush=True)
     
-    new_token = {
-      "name": name,
-      "access_token": access_token,
-      "refresh_token": refresh_token,
-      "expires_at": expires_at,
-      "token_type": token_type,
-      "user": user["_id"]
-    }
+#     new_token = {
+#       "name": name,
+#       "access_token": access_token,
+#       "refresh_token": refresh_token,
+#       "expires_at": expires_at,
+#       "token_type": token_type,
+#       "user": user["_id"]
+#     }
     
-    token_collection.insert_one(new_token)
-    return jsonify({'message': 'Success'}), 200
+#     token_collection.insert_one(new_token)
+#     return jsonify({'message': 'Success'}), 200
 
 
 if __name__ == '__main__':

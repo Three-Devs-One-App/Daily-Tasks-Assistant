@@ -182,15 +182,37 @@
   border-radius: 0.75rem;
 }
 
-.main-task {
-}
-
 .task {
-  width: 20rem;
+  width: 16rem;
   border: 3px solid black;
   border-radius: 0.75rem;
   background-color: #66ffff;
-  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
   padding: 1rem;
   text-align: center;
+}
+
+.task h1 {
+  margin-bottom: 1rem;
+}
+
+.main-task {
+  width: 20rem;
+  margin-top: 1.75rem;
+}
+
+.main-task h1 {
+  font-size: 32px;
+}
+
+.main-task p {
+  margin-bottom: 1rem;
+}
+
+.main-task h2 {
+}
+
+.due_label {
+  text-decoration: underline;
+  color: forestgreen;
 }
