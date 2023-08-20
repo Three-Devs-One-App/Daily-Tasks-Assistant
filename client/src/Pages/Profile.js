@@ -1,4 +1,19 @@
 import { useEffect } from "react";
+import TaskManager from "./HomeComponents/TaskManager";
+
+const tasks = [
+  {
+    title: "Science Homework",
+    description: "Science homework page 12 problem 1 - 7",
+    due_date: new Date(Date.now() + 86400000),
+  },
+  {
+    title: "Math Homework",
+    description: "Math homework page 25 problem 10 - 17",
+    due_date: new Date(Date.now() + 86400000),
+  },
+];
+
 function Profile({ setPage, setLoggedIn }) {
   const handleClickLogout = () => {
     fetch("http://localhost:8080/Logout", {
@@ -22,9 +37,9 @@ function Profile({ setPage, setLoggedIn }) {
       .catch((error) => console.log("There was an error!", error));
   };
 
-  const handleNewTask = () =>{
+  const handleNewTask = () => {
     setPage("Task");
-  }
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/check-login", { credentials: "include" })
@@ -40,17 +55,15 @@ function Profile({ setPage, setLoggedIn }) {
 
   return (
     <div>
-      <h1>Testing Page</h1>
-      <button id="Logout" onClick={handleClickLogout}>
+      <button className="intro-button" id="Logout" onClick={handleClickLogout}>
         {" "}
-        Logout
-        {" "}
+        Logout{" "}
       </button>
-      <button id="NewTask" onClick={handleNewTask}>
+      <button className="intro-button" id="NewTask" onClick={handleNewTask}>
         {" "}
-        New Task
-        {" "}
+        New Task{" "}
       </button>
+      <TaskManager tasks={tasks} />
     </div>
   );
 }

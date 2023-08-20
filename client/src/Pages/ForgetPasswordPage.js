@@ -27,11 +27,16 @@ const ForgetPasswordPage = () => {
 
   return (
     <div className="forget-page-div">
-      <h1>Daily Task Assistant</h1>
+      <h1 className="page-title">Daily Task Assistant</h1>
       <h3 id="e3">Email:</h3>
-      <form onSubmit={handleBtn}>
-        <input id="enterEmail" type="text" placeholder="Enter Email Here" />
-        <button id="ResetButton" onClick={handleBtn}>
+      <form className="intro-form" onSubmit={handleBtn}>
+        <input
+          className="intro-input"
+          id="enterEmail"
+          type="text"
+          placeholder="Enter Email Here"
+        />
+        <button className="intro-button" id="ResetButton" onClick={handleBtn}>
           Reset Password
         </button>
       </form>

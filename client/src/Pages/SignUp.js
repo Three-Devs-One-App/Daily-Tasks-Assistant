@@ -54,10 +54,11 @@ function SignUp({ setPage }) {
 
   return (
     <div className="SignUp">
-      <h1>Daily Task Assistant</h1>
-      <form id="loginForm" onSubmit={handleSubmit}>
+      <h1 className="page-title">Daily Task Assistant</h1>
+      <form className="intro-form" id="loginForm" onSubmit={handleSubmit}>
         <label for="username">Username:</label>
         <input
+          className="intro-input"
           type="text"
           id="username"
           name="username"
@@ -66,6 +67,7 @@ function SignUp({ setPage }) {
         <br />
         <label for="E-mail">E-mail:</label>
         <input
+          className="intro-input"
           type="text"
           id="E-mail"
           name="E-mail"
@@ -74,6 +76,7 @@ function SignUp({ setPage }) {
         <br />
         <label for="password">Password:</label>
         <input
+          className="intro-input"
           type="password"
           id="password"
           name="password"
@@ -82,19 +85,24 @@ function SignUp({ setPage }) {
         <br />
         <label for="Re-password">Re-Password:</label>
         <input
+          className="intro-input"
           type="password"
           id="Re-password"
           name="Re-password"
           onChange={(e) => setpass2(e.target.value)}
         />
         <br />
-        <button type="submit" id="submitSignclick">
+        <button className="intro-button" type="submit" id="submitSignclick">
           Sign-UP
         </button>
         <br />
         {warning && <p id="warning">{warning}</p>}
       </form>
-      <button id="Already_User" onClick={handleClickAlreadySignUp}>
+      <button
+        className="intro-button"
+        id="Already_User"
+        onClick={handleClickAlreadySignUp}
+      >
         Already Sign-Up
       </button>
     </div>

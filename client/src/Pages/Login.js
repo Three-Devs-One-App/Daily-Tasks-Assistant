@@ -43,10 +43,11 @@ function Login({ setPage, sessionStatus }) {
 
   return (
     <div>
-      <h1>Daily Task Assistant</h1>
-      <form id="loginForm" onSubmit={handleLogin}>
+      <h1 className="page-title">Daily Task Assistant</h1>
+      <form className="intro-form" id="loginForm" onSubmit={handleLogin}>
         <label for="username">Username:</label>
         <input
+          className="intro-input"
           type="text"
           id="username"
           name="username"
@@ -55,6 +56,7 @@ function Login({ setPage, sessionStatus }) {
         <br />
         <label for="password">Password:</label>
         <input
+          className="intro-input"
           type="password"
           id="password"
           name="password"
@@ -63,7 +65,7 @@ function Login({ setPage, sessionStatus }) {
         <br />
         <u onClick={handleClickSignUp}>Need to Sign Up? Click Here</u>
         <br />
-        <button type="submit" id="Loginclick">
+        <button className="intro-button" type="submit" id="Loginclick">
           Login
         </button>
         <br />
