@@ -107,10 +107,8 @@ def user_Login():
 
   if user:
      if user['PassWord'] == password:
-        print(user['Username'],flush=True)
         session['username'] = user['Username']
         username = user['Username']
-        print(session['username'],flush=True)
         return jsonify({'login': 'User Login successfully'}), 200
      else:
        return jsonify({'login': 'Username/Password incorrect'}) , 400
@@ -119,22 +117,18 @@ def user_Login():
 @app.route('/Logout', methods=['POST','GET'])
 @cross_origin(supports_credentials=True)
 def user_Logout():
-    print("logout called",flush=True)
     session.pop('username',None)
-    print('username' in session)
     return jsonify({'login': 'User Logout successfully'}), 200
 
 @app.route('/check-login', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def check_login():
-    print("check_login called",flush=True)
     if 'username' in session:
-        print(session['username'],flush=True)
-        return jsonify({'loggedIn': True})
-    print("username not in session",flush=True)
+      return jsonify({'loggedIn': True})
     return jsonify({'loggedIn': False})
 
-@app.route('/Task', methods=['POST','GET'])
+
+@app.route('/Task', methods=['POST','GET','PUT'])
 @cross_origin(supports_credentials=True)
 def user_Task():
   if request.method == 'POST':
@@ -158,12 +152,57 @@ def user_Task():
                   "tasks": id
               }
           }
-      )
-    
+    )    
     if response.modified_count == 1:
       return jsonify({'message': 'TaskAdded'}), 200
     else:
       return jsonify({'message': 'Failed to add task'}), 500
+  
+  elif request.method == 'PUT':
+    data = request.get_json()
+    
+    try:
+      task_title = data['title']
+      task_description = data['description']
+      task_date = data['due_date']
+      task_id = data['task_id']
+    except:
+      return jsonify({'message': 'Data not in the right format'}), 400
+    
+    response = task_collection.update_one(
+      {'_id': task_id},
+      {
+        "$set": {
+          'title': task_title,
+          'description': task_description,
+          'due_date': task_date
+        }
+      }
+    )
+    
+    if response.modified_count == 1:
+      return jsonify({'message': 'Task Modified'}), 200
+    else:
+      return jsonify({'message': 'Task Id not found'}), 500
+  
+  elif request.method == 'GET':
+    if 'username' not in session:
+      return jsonify({'message': 'user not signed in'}), 400
+    
+    user = user_collection.find_one({'Username': session['username']})
+    
+    if user == None:
+      return jsonify({'message': "Corresponding User with given username not found"}), 500
+    
+    user_tasks = []
+    
+    for task_id in user['tasks']:
+      task = task_collection.find_one({'_id': task_id})
+      if task != None:
+        task['_id'] = str(task['_id'])
+        user_tasks.append(task)
+        
+    return jsonify({'tasks': user_tasks}), 200
     
   else:
     return jsonify({'message': 'method not implemented'}), 500

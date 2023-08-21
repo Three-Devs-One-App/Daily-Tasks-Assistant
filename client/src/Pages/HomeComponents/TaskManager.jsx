@@ -1,25 +1,49 @@
 import { useState, useEffect } from "react";
-const TaskManager = ({ tasks }) => {
+const TaskManager = ({ setPage }) => {
   const [modalIdx, setModalIdx] = useState(-1);
-
+  const [tasks, setTasks] = useState(null);
   const closeModal = () => setModalIdx(-1);
 
-  return (
-    <div id="task_manager">
-      {modalIdx >= 0 && (
-        <TaskViewEdit task={tasks[modalIdx]} closeModal={closeModal} />
-      )}
-      {modalIdx === -1 &&
-        tasks.map((task, index) => {
-          const openModal = () => setModalIdx(index);
-          return index === 0 ? (
-            <MainTask task={task} openModal={openModal} />
-          ) : (
-            <Task task={task} openModal={openModal} />
-          );
-        })}
-    </div>
-  );
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch("http://localhost:8080/Task", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        setTasks(data.tasks);
+      } else {
+        setTasks([]);
+      }
+    };
+    fetchTasks();
+  }, []);
+
+  if (!tasks) return <div>Loading ...</div>;
+  else {
+    return (
+      <div id="task_manager">
+        {modalIdx >= 0 && (
+          <TaskViewEdit
+            task={tasks[modalIdx]}
+            closeModal={closeModal}
+            setPage={setPage}
+          />
+        )}
+        {modalIdx === -1 &&
+          tasks.map((task, index) => {
+            const openModal = () => setModalIdx(index);
+            return index === 0 ? (
+              <MainTask task={task} openModal={openModal} />
+            ) : (
+              <Task task={task} openModal={openModal} />
+            );
+          })}
+      </div>
+    );
+  }
 };
 
 const MainTask = ({ task, openModal }) => {
@@ -43,7 +67,7 @@ const Task = ({ task, openModal }) => {
   );
 };
 
-const TaskViewEdit = ({ task, closeModal }) => {
+const TaskViewEdit = ({ task, closeModal, setPage }) => {
   const [edit, setEdit] = useState(false);
   const [warning, setWarning] = useState("");
 
@@ -55,12 +79,12 @@ const TaskViewEdit = ({ task, closeModal }) => {
   const handleUpdateRequest = async () => {
     const title = document.querySelector("#title_inp").value;
     const description = document.querySelector("#description_inp").value;
-    const date = document.querySelector("#date_inp");
+    const date = document.querySelector("#date_inp").value;
 
     const data = JSON.stringify({
       title: title,
       description: description,
-      date: date,
+      due_date: date,
       task_id: task._id,
     });
 
@@ -73,7 +97,7 @@ const TaskViewEdit = ({ task, closeModal }) => {
       body: data,
     });
 
-    if (res.ok) closeModal();
+    if (res.ok) setPage("Profile");
     else setWarning("An error occurred");
   };
 
