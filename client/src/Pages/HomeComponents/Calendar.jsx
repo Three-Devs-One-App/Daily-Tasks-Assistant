@@ -26,6 +26,7 @@ function Cal() {
 
   const findTaskByDate = date => {
     return tasks.find(task => {
+        //conversion of task date
         const tasksDate = new Date(task.due_date);
         return date.getFullYear() === tasksDate.getFullYear() &&
             date.getMonth() === tasksDate.getMonth() &&
@@ -47,11 +48,14 @@ function Cal() {
                 const task = findTaskByDate(date);
                 if (task) {
                     console.log("task set")
+                    //set task from find task by date
                     setShowTaskInfo(task);
                 }
             }}
             />
-            {taskInfo && (
+            
+            {//small window pops up if there's task clicked
+            taskInfo && (
                 <div style={{ backgroundColor: 'yellow' ,marginTop: '20px', padding: '10px', border: '1px solid black', width: '200px' }}>
                     <strong>Title:</strong> {taskInfo.title}
                     <br />
