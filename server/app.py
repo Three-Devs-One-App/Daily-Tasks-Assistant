@@ -8,6 +8,7 @@ from bson import ObjectId
 
 # Flask and CORS setup
 app = Flask(__name__)
+app.secret_key = '12345'
 CORS(app)
 client = MongoClient("mongodb+srv://jiaqicheng1104:blM7TkA6NqY8n1vH@dta.p2gykgh.mongodb.net/?retryWrites=true&w=majority")
 db = client["DTA"]
@@ -30,7 +31,6 @@ import base64
 import os
 
 load_dotenv()
-app.secret_key = os.getenv('SECRET_KEY')
 
 def update_token(name, token, refresh_token=None, access_token=None):
     if refresh_token:

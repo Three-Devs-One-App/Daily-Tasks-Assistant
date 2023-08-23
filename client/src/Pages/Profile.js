@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import TaskManager from "./HomeComponents/TaskManager";
+import Cal from "./HomeComponents/Calendar";
 
 function Profile({ setPage, setLoggedIn }) {
   const handleClickLogout = () => {
@@ -40,7 +41,9 @@ function Profile({ setPage, setLoggedIn }) {
         {" "}
         New Task{" "}
       </button>
+
       <TaskManager setPage={setPage} />
+      <Cal/>
     </div>
   );
 }
