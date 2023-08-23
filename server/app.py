@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 
 from flask_session import Session
 from pymongo import MongoClient
+from bson import ObjectId
 
 # Flask and CORS setup
 app = Flask(__name__)
@@ -128,7 +129,7 @@ def check_login():
     return jsonify({'loggedIn': False})
 
 
-@app.route('/Task', methods=['POST','GET','PUT'])
+@app.route('/Task', methods=['POST','GET','PUT', 'DELETE'])
 @cross_origin(supports_credentials=True)
 def user_Task():
   if request.method == 'POST':
@@ -203,7 +204,20 @@ def user_Task():
         user_tasks.append(task)
         
     return jsonify({'tasks': user_tasks}), 200
+  
+  elif request.method == 'DELETE':
     
+    task_id = ObjectId(request.args.get('task_id'))
+    
+    task_response = task_collection.delete_one({'_id': task_id})
+    
+    user_collection.update_one({'Username': session['username']}, {'$pull':{'tasks': task_id}})
+    
+    if task_response.deleted_count == 1:
+      return jsonify({'message': "task removed"}), 200
+    else:
+      return jsonify({'message': 'no task found'}), 202
+  
   else:
     return jsonify({'message': 'method not implemented'}), 500
 

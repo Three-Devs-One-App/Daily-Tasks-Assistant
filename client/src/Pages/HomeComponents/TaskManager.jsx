@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 const TaskManager = ({ setPage }) => {
   const [modalIdx, setModalIdx] = useState(-1);
   const [tasks, setTasks] = useState(null);
+  const [warning, setWarning] = useState("");
+  const [updatedTask, setUpdatedTask] = useState(false);
   const closeModal = () => setModalIdx(-1);
 
   useEffect(() => {
@@ -13,13 +15,15 @@ const TaskManager = ({ setPage }) => {
 
       if (res.status === 200) {
         const data = await res.json();
+        console.log("received data");
+        console.log(data);
         setTasks(data.tasks);
       } else {
         setTasks([]);
       }
     };
     fetchTasks();
-  }, []);
+  }, [updatedTask]);
 
   if (!tasks) return <div>Loading ...</div>;
   else {
@@ -30,46 +34,69 @@ const TaskManager = ({ setPage }) => {
             task={tasks[modalIdx]}
             closeModal={closeModal}
             setPage={setPage}
+            setWarning={setWarning}
           />
         )}
         {modalIdx === -1 &&
           tasks.map((task, index) => {
             const openModal = () => setModalIdx(index);
+            const removeTaskASync = async () => {
+              const res = await fetch(
+                `http://localhost:8080/Task?task_id=${task._id}`,
+                {
+                  method: "DELETE",
+                  credentials: "include",
+                }
+              );
+              if (res.status === 200) {
+                setUpdatedTask((updatedTask) => !updatedTask);
+              } else setWarning(await res.text());
+            };
             return index === 0 ? (
-              <MainTask task={task} openModal={openModal} />
+              <MainTask
+                task={task}
+                openModal={openModal}
+                removeTask={() => removeTaskASync()}
+              />
             ) : (
-              <Task task={task} openModal={openModal} />
+              <Task
+                task={task}
+                openModal={openModal}
+                removeTask={() => removeTaskASync()}
+              />
             );
           })}
+        <h1 style={{ color: "red" }}>{warning}</h1>
       </div>
     );
   }
 };
 
-const MainTask = ({ task, openModal }) => {
+const MainTask = ({ task, openModal, removeTask }) => {
   return (
     <div className="main-task task">
       <h1 onClick={openModal}>{task.title}</h1>
       <p>{task.description}</p>
       <h2 className="due_label">Due On: </h2>
       <h2>{task.due_date.toLocaleString()}</h2>
+      <button onClick={removeTask}>-</button>
     </div>
   );
 };
 
-const Task = ({ task, openModal }) => {
+const Task = ({ task, openModal, removeTask }) => {
   return (
     <div className="task">
       <h1 onClick={openModal}>{task.title}</h1>
       <h2 className="due_label">Due On: </h2>
       <h2>{task.due_date.toLocaleString()}</h2>
+      <button onClick={removeTask}>-</button>
     </div>
   );
 };
 
-const TaskViewEdit = ({ task, closeModal, setPage }) => {
+const TaskViewEdit = ({ task, closeModal, setPage, setWarning }) => {
   const [edit, setEdit] = useState(false);
-  const [warning, setWarning] = useState("");
 
   const updateRequest = (e) => {
     e.preventDefault();
@@ -116,7 +143,6 @@ const TaskViewEdit = ({ task, closeModal, setPage }) => {
       <button type="submit" onClick={updateRequest}>
         Submit
       </button>
-      <h1>{warning}</h1>
     </>
   );
 
