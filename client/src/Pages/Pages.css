@@ -255,3 +255,32 @@
   height: 90%;
   background-color: #66ffff;
 }
+/* Adjust the overall size of the calendar */
+.react-calendar {
+  width: 50%;   /* Adjust as needed */
+  max-width: 100%;
+  background: rgb(239, 135, 232);
+  border: 1px solid #a0a095;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+
+/* Adjust the individual tile (day) size */
+.react-calendar__tile {
+  max-width: 10%; /* Adjust as needed */
+  max-height: 10%;
+}
+
+/* Highlight the current day */
+.react-calendar__tile--now {
+  background: rgb(24, 118, 155);  /* Change to your desired color */
+}
+
+.highlight-date {
+  background-color: red;
+  color: black; /* Adjust text color if needed */
+}
+
+#task_Modal{
+  background-color: yellow;
+}
