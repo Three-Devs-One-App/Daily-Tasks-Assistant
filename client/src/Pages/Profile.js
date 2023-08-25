@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import TaskManager from "./HomeComponents/TaskManager";
 import Cal from "./HomeComponents/Calendar";
+import GraphicalAnalysis from "./HomeComponents/Graphical_Analysis";
 
 function Profile({ setPage, setLoggedIn }) {
   const handleClickLogout = () => {
@@ -44,6 +45,7 @@ function Profile({ setPage, setLoggedIn }) {
 
       <TaskManager setPage={setPage} />
       <Cal/>
+      <GraphicalAnalysis/>
     </div>
   );
 }

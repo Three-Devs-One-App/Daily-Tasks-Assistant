@@ -242,3 +242,7 @@
   background-color: red;
   color: black; /* Adjust text color if needed */
 }
+
+#task_Modal{
+  background-color: yellow;
+}
