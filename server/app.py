@@ -138,6 +138,9 @@ def user_Task():
     Task_Date=data.get('Task_Date')
     Task_Description=data.get('Task_Description')
     
+    if Task_Name == None or Task_Date == None or Task_Description == None:
+      return jsonify({'message': 'all fields not provided'}), 400
+    
     response = task_collection.insert_one({
       'title': Task_Name,
       'description': Task_Description,
@@ -170,8 +173,11 @@ def user_Task():
     except:
       return jsonify({'message': 'Data not in the right format'}), 400
     
+    if task_title == None or task_description == None or task_date == None or task_id == None:
+      return jsonify({'message': 'All fields must be filled'}), 400
+    
     response = task_collection.update_one(
-      {'_id': task_id},
+      {'_id': ObjectId(task_id)},
       {
         "$set": {
           'title': task_title,
@@ -180,6 +186,8 @@ def user_Task():
         }
       }
     )
+    
+    print(task_id, flush=True)
     
     if response.modified_count == 1:
       return jsonify({'message': 'Task Modified'}), 200

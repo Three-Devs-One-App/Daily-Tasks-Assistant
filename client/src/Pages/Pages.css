@@ -1,4 +1,7 @@
 /* Pages CSS */
+* {
+  box-sizing: border-box;
+}
 .page-title {
   position: absolute;
   width: 1000px;
@@ -138,7 +141,7 @@
 
   font-size: medium;
 
-  color: aquamarine;
+  color: red;
 }
 
 /* Forget Password CSS */
@@ -215,4 +218,40 @@
 .due_label {
   text-decoration: underline;
   color: forestgreen;
+}
+
+#add-task-container {
+  width: fit-content;
+  padding: 1rem;
+}
+
+#NewTaskBtn {
+  background-color: transparent;
+  border-color: transparent;
+  margin-top: 1rem;
+}
+
+#NewTaskBtn:hover {
+  cursor: pointer;
+}
+
+#modal_overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+#modal_wrapper {
+  position: relative;
+  width: 70%;
+  height: 90%;
+  background-color: #66ffff;
 }

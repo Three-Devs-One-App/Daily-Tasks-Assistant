@@ -9,7 +9,6 @@ function Task({ setPage }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleCreateTask();
-    setPage("Profile");
   };
 
   const handleCreateTask = async () => {
