@@ -39,10 +39,10 @@ function GraphicalAnalysis() {
         });
 
         setChartData([
-            { name: 'Week 1', Completed: counts[0] },
-            { name: 'Week 2', Completed: counts[1] },
-            { name: 'Week 3', Completed: counts[2] },
-            { name: 'Week 4', Completed: counts[3] },
+            { name: 'Within 1 week', Completed: counts[3] },
+            { name: '2 Week ago', Completed: counts[2] },
+            { name: '3 Week ago', Completed: counts[1] },
+            { name: '4 Week ago', Completed: counts[0] },
         ]);
     }, [tasks]);
 
