@@ -6,6 +6,8 @@ import {
   SubtractIcon,
 } from "../../components/icons";
 import Modal from "../../components/Modal";
+import toast from "react-hot-toast";
+
 const TaskManager = ({ setPage }) => {
   const [taskPage, setTaskPage] = useState("Tasks");
   const [modalIdx, setModalIdx] = useState(-1);
@@ -163,6 +165,7 @@ const TaskViewEdit = ({
     });
 
     if (res.ok) {
+      toast.success("Task has been successfully updated!");
       setPage("Profile");
       closeModal();
       taskUpdated();
