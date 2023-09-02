@@ -174,15 +174,41 @@
   top: 47%;
 }
 
+/* Home Page */
+
+#profile_page {
+  min-height: 100%;
+  min-width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 4fr 2fr;
+}
+
+#block3 {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Task Manager*/
-#task_manager {
-  width: 24rem;
+#task_manager_container {
   background-color: #e0f4fd;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-radius: 0.75rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  height: 95%;
+}
+
+#task_manager {
+  width: 24rem;
+  display: grid;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 90%;
 }
 
 .task {
@@ -193,6 +219,7 @@
   margin-bottom: 1.75rem;
   padding: 1rem;
   text-align: center;
+  overflow-wrap: break-word;
 }
 
 .task h1 {
@@ -200,8 +227,13 @@
 }
 
 .main-task {
-  width: 20rem;
-  margin-top: 1.75rem;
+  width: 45rem;
+  position: absolute;
+  display: block;
+  margin-top: 1rem;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .main-task h1 {
@@ -210,9 +242,6 @@
 
 .main-task p {
   margin-bottom: 1rem;
-}
-
-.main-task h2 {
 }
 
 .due_label {
@@ -257,7 +286,7 @@
 }
 /* Adjust the overall size of the calendar */
 .react-calendar {
-  width: 50%;   /* Adjust as needed */
+  width: 50%; /* Adjust as needed */
   max-width: 100%;
   background: rgb(239, 135, 232);
   border: 1px solid #a0a095;
@@ -273,7 +302,7 @@
 
 /* Highlight the current day */
 .react-calendar__tile--now {
-  background: rgb(24, 118, 155);  /* Change to your desired color */
+  background: rgb(24, 118, 155); /* Change to your desired color */
 }
 
 .highlight-date {
@@ -281,6 +310,6 @@
   color: black; /* Adjust text color if needed */
 }
 
-#task_Modal{
+#task_Modal {
   background-color: yellow;
 }

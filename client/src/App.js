@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import IntroPage from "./Pages/Intro.js";
 import SignUp from "./Pages/SignUp.js";
 import Login from "./Pages/Login.js";
-import Profile from "./Pages/Profile.js";
+import Home from "./Pages/Home.js";
 import ForgetPasswordPage from "./Pages/ForgetPasswordPage.js";
 import Task from "./Pages/Task.js";
 import { Toaster } from "react-hot-toast";
@@ -43,7 +43,7 @@ const App = () => {
         <ForgetPasswordPage setPage={setPage} />
       )}
       {loggedIn && (Page === "Profile" || Page === "") && (
-        <Profile setPage={setPage} setLoggedIn={setLoggedIn} />
+        <Home setPage={setPage} setLoggedIn={setLoggedIn} />
       )}
       {loggedIn && Page === "Task" && <Task setPage={setPage} />}
     </div>

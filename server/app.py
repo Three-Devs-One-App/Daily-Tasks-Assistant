@@ -29,6 +29,7 @@ from datetime import datetime
 import secrets
 import base64
 import os
+from datetime import datetime
 
 load_dotenv()
 
@@ -129,39 +130,48 @@ def check_login():
     return jsonify({'loggedIn': False})
 
 
-@app.route('/Task', methods=['POST','GET','PUT', 'DELETE'])
+@app.route('/Task', methods=['POST','GET','PUT', 'DELETE', 'PATCH'])
 @cross_origin(supports_credentials=True)
 def user_Task():
+  
+  # Output -> Adds new post to the database
+  # Input -> { Task_Name, Task_Date, Task_Description }
   if request.method == 'POST':
     data = request.get_json()
-    Task_Name=data.get('Task_Name')
-    Task_Date=data.get('Task_Date')
-    Task_Description=data.get('Task_Description')
+    
+    Task_Name=data.get('task_name')
+    Task_Date=data.get('task_date')
+    Task_Description=data.get('task_description')
+    Task_Priority=data.get('task_priorty')
+    
+    # default priority ?
+    if Task_Priority == None:
+      Task_Priority = 10
     
     if Task_Name == None or Task_Date == None or Task_Description == None:
       return jsonify({'message': 'all fields not provided'}), 400
     
+    if 'username' not in session:
+      return jsonify({'message': 'user not signed in'}), 400
+    
+    # insert user
+    user = user_collection.find_one({'Username': session['username']})
     response = task_collection.insert_one({
       'title': Task_Name,
       'description': Task_Description,
-      'due_date': Task_Date
+      'due_date': Task_Date,
+      'priority': Task_Priority,
+      'on_time': None,
+      'user_id': str(user['_id']),
     })
     
-    id = response.inserted_id
-      
-    response = user_collection.update_one(
-          {"Username": session['username']},
-          {
-              "$push": {
-                  "tasks": id
-              }
-          }
-    )    
-    if response.modified_count == 1:
-      return jsonify({'message': 'TaskAdded'}), 200
-    else:
-      return jsonify({'message': 'Failed to add task'}), 500
+    if not response.acknowledged:
+      return jsonify({'message': 'Failed to insert task'}), 500
+    
+    return jsonify({'message': 'Task added!'}), 200
   
+  # Output -> Update old post with new data
+  # Input -> { title, description, due_date, task_id }
   elif request.method == 'PUT':
     data = request.get_json()
     
@@ -186,14 +196,14 @@ def user_Task():
         }
       }
     )
-    
-    print(task_id, flush=True)
-    
+        
     if response.modified_count == 1:
       return jsonify({'message': 'Task Modified'}), 200
     else:
       return jsonify({'message': 'Task Id not found'}), 500
   
+  # Output -> All reviews for the logged in user
+  # Input -> None
   elif request.method == 'GET':
     if 'username' not in session:
       return jsonify({'message': 'user not signed in'}), 400
@@ -203,29 +213,65 @@ def user_Task():
     if user == None:
       return jsonify({'message': "Corresponding User with given username not found"}), 500
     
-    user_tasks = []
+    cursor = task_collection.find({'user_id': str(user['_id'])})
     
-    for task_id in user['tasks']:
-      task = task_collection.find_one({'_id': task_id})
-      if task != None:
-        task['_id'] = str(task['_id'])
-        user_tasks.append(task)
-        
-    return jsonify({'tasks': user_tasks}), 200
+    tasks = []
+    for task in cursor:
+      task['_id'] = str(task['_id'])
+      tasks.append(task)
+    
+    return jsonify({'tasks': tasks}), 200
   
+  # Output -> Tasks with provided task id deleted
+  # Input -> None
   elif request.method == 'DELETE':
     
     task_id = ObjectId(request.args.get('task_id'))
     
+    if task_id == None:
+      return jsonify({'message': 'task id not provided'}), 400
+    
     task_response = task_collection.delete_one({'_id': task_id})
-    
-    user_collection.update_one({'Username': session['username']}, {'$pull':{'tasks': task_id}})
-    
+        
     if task_response.deleted_count == 1:
       return jsonify({'message': "task removed"}), 200
     else:
       return jsonify({'message': 'no task found'}), 202
   
+  # Output -> Updates the onTime field accordingly for the provided task id
+  # Input -> { task_id }
+  elif request.method == 'PATCH':
+    data = request.get_json()
+    
+    task_id = data['task_id']
+    
+    task = task_collection.find_one({'_id': ObjectId(task_id)})
+    
+    if task == None:
+      return jsonify({'message': 'task_id not found'}), 400
+    
+    try:
+      datetime_input = datetime.strptime(task['due_date'], "%Y-%m-%dT%H:%M")
+    except:
+      return jsonify({'message': 'due date not in right format, please delete task and insert again'}), 400
+    
+    now = datetime.now()
+    
+    if datetime_input <= now:
+      isOnTime = True
+    else:
+      isOnTime = False
+    
+    res = task_collection.update_one(
+      {'_id': ObjectId(task_id)},
+      {
+        "$set": {
+          'on_time': isOnTime
+        }
+      }
+    )
+    
+    return jsonify({'message': 'Tasks updated according to time: {}'.format(isOnTime)}), 200
   else:
     return jsonify({'message': 'method not implemented'}), 500
 

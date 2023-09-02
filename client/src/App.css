@@ -3,5 +3,8 @@
   background-size: auto;
 
   min-height: 100vh; /* This makes sure your App takes up the full height of the viewport */
-  margin: 0; /* This removes any default margin */
+}
+
+body {
+  margin: 0;
 }

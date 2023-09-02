@@ -3,7 +3,7 @@ import TaskManager from "./HomeComponents/TaskManager";
 import Cal from "./HomeComponents/Calendar";
 import GraphicalAnalysis from "./HomeComponents/Graphical_Analysis";
 
-function Profile({ setPage, setLoggedIn }) {
+function Home({ setPage, setLoggedIn }) {
   const handleClickLogout = () => {
     fetch("http://localhost:8080/Logout", {
       method: "GET",
@@ -33,20 +33,30 @@ function Profile({ setPage, setLoggedIn }) {
   useEffect(() => {}, []);
 
   return (
-    <div>
-      <button className="intro-button" id="Logout" onClick={handleClickLogout}>
-        {" "}
-        Logout{" "}
-      </button>
-      <button className="intro-button" id="NewTask" onClick={handleNewTask}>
-        {" "}
-        New Task{" "}
-      </button>
-
-      <TaskManager setPage={setPage} />
+    <div className="Page" id="profile_page">
+      <div id="block1"></div>
+      <div id="block2"></div>
+      <div id="block3">
+        <TaskManager setPage={setPage} />
+      </div>
+      {/* <TaskManager setPage={setPage} />
       <Cal/>
-      <GraphicalAnalysis/>
+      <GraphicalAnalysis/> */}
     </div>
   );
 }
-export default Profile;
+export default Home;
+
+/*
+
+<div className="Page" id="profile_page">
+      <div id="block1"></div>
+      <div id="block2"></div>
+      <div id="block3">
+        <div id="task_manager">
+          <div id="main_task"></div>
+        </div>
+      </div>
+    </div>
+
+*/
