@@ -257,7 +257,7 @@ def user_Task():
     
     now = datetime.now()
     
-    if datetime_input <= now:
+    if now <= datetime_input:
       isOnTime = True
     else:
       isOnTime = False
