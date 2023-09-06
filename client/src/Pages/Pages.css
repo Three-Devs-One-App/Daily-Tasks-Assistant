@@ -184,7 +184,12 @@
   display: grid;
   grid-template-columns: 2fr 4fr 2fr;
 }
-
+#block2 {
+  height: 100vh;
+  display: flex;
+  justify-content:end;
+  align-items: end;
+}
 #block3 {
   height: 100vh;
   display: flex;
@@ -309,7 +314,42 @@
   background-color: red;
   color: black; /* Adjust text color if needed */
 }
-
+.allFinishedB4{
+  background-color: green;
+  color: black;
+}
+.allFailB4{
+  background-color: brown;
+  color: black;
+}
+.someFinishedB4{
+  background-color: rgb(172, 220, 39);
+  color: black;
+}
+.allFinishedToday{
+  background-color: rgb(8, 141, 112);
+  color: black;
+}
+.allFailToday{
+  background-color: rgb(21, 54, 54);
+  color: black;
+}
+.someFinishedToday{
+  background-color: rgb(45, 122, 106);
+  color: black;
+}
+.allFinishedAfter{
+  background-color: rgb(232, 78, 224);
+  color: black;
+}
+.allFailAfter{
+  background-color: rgb(66, 8, 59);
+  color: black;
+}
+.someFinishedAfter{
+  background-color: rgb(141, 100, 141);
+  color: black;
+}
 #task_Modal {
   background-color: yellow;
 }
