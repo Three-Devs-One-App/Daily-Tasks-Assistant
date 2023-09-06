@@ -8,39 +8,14 @@ import {
 import Modal from "../../components/Modal";
 import toast from "react-hot-toast";
 
-const TaskManager = ({ setPage }) => {
+const TaskManager = ({ setPage, tasks, taskUpdated }) => {
   const [taskPage, setTaskPage] = useState("Tasks");
   const [modalIdx, setModalIdx] = useState(-1);
-  const [tasks, setTasks] = useState(null);
-  const [updatedTask, setUpdatedTask] = useState(false);
 
   const closeModal = () => setModalIdx(-1);
 
-  const taskUpdated = () => setUpdatedTask((updatedTask) => !updatedTask);
-
   const setNewTaskPage = () => setTaskPage("AddTask");
   const setAllTaskPage = () => setTaskPage("Tasks");
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const res = await fetch("http://localhost:8080/Task", {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (res.status === 200) {
-        const data = await res.json();
-        const tasks = data.tasks.filter((task) => {
-          return task.on_time === null;
-        });
-        tasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-        setTasks(tasks);
-      } else {
-        setTasks([]);
-      }
-    };
-    fetchTasks();
-  }, [updatedTask]);
 
   if (!tasks) return <div>Loading ...</div>;
   else {

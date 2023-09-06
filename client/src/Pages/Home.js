@@ -2,8 +2,34 @@ import { useEffect } from "react";
 import TaskManager from "./HomeComponents/TaskManager";
 import Cal from "./HomeComponents/Calendar";
 import GraphicalAnalysis from "./HomeComponents/Graphical_Analysis";
-
+import { useState } from "react";
 function Home({ setPage, setLoggedIn }) {
+  const [updatedTask, setUpdatedTask] = useState(false);
+  const [tasks, setTasks] = useState(null);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch("http://localhost:8080/Task", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        const tasks = data.tasks.filter((task) => {
+          return task.on_time === null;
+        });
+        tasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+        setTasks(tasks);
+      } else {
+        setTasks([]);
+      }
+    };
+    fetchTasks();
+  }, [updatedTask]);
+
+  const taskUpdated = () => setUpdatedTask((updatedTask) => !updatedTask);
+
   const handleClickLogout = () => {
     fetch("http://localhost:8080/Logout", {
       method: "GET",
@@ -32,6 +58,7 @@ function Home({ setPage, setLoggedIn }) {
 
   useEffect(() => {}, []);
 
+  if (!tasks) return <div>Loading...</div>;
   return (
     <div className="Page" id="profile_page">
       <div id="block1">
@@ -43,10 +70,14 @@ function Home({ setPage, setLoggedIn }) {
       </div>
       <div id="block2">
         <div></div>
-        <Cal />
+        <Cal tasks={tasks} />
       </div>
       <div id="block3">
-        <TaskManager setPage={setPage} />
+        <TaskManager
+          tasks={tasks}
+          setPage={setPage}
+          taskUpdated={taskUpdated}
+        />
       </div>
       {/* <TaskManager setPage={setPage} />
       <Cal/>

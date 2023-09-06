@@ -187,7 +187,7 @@
 #block2 {
   height: 100vh;
   display: flex;
-  justify-content:end;
+  justify-content: end;
   align-items: end;
 }
 #block3 {
@@ -281,6 +281,7 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
+  z-index: 50;
 }
 
 #modal_wrapper {
@@ -293,16 +294,16 @@
 /* Container Styling */
 .react-calendar {
   position: relative;
-  max-width: 90%;  /* Taking the full width of the parent container */
-  background: #f5f5f5;  /* Light Grey background */
-  border-radius: 8px;  /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);  /* subtle shadow */
-  overflow: hidden;  /* Hide any child elements protruding out */
+  max-width: 90%; /* Taking the full width of the parent container */
+  background: #f5f5f5; /* Light Grey background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  overflow: hidden; /* Hide any child elements protruding out */
 }
 
 /* Header - Navigation Buttons and Labels */
 .react-calendar__navigation {
-  background-color: #e0e0e0;  /* Slightly darker grey than the container */
+  background-color: #e0e0e0; /* Slightly darker grey than the container */
 }
 
 .react-calendar__navigation button {
@@ -317,30 +318,30 @@
 }
 
 .react-calendar__month-view__weekdays {
-  background-color: #d0d0d0;  /* Even darker grey for weekdays background */
+  background-color: #d0d0d0; /* Even darker grey for weekdays background */
 }
 
 /* Weekdays */
 .react-calendar__month-view__weekdays__weekday abbr {
   text-decoration: none;
   font-weight: bold;
-  color: #616161;  /* Dark grey for weekday text */
+  color: #616161; /* Dark grey for weekday text */
 }
 
 /* Individual Days */
 .react-calendar__month-view__days__day {
-  border-bottom: 1px solid #d0d0d0;  /* Separator between days */
+  border-bottom: 1px solid #d0d0d0; /* Separator between days */
 }
 
 /* Today */
 .react-calendar__tile--now {
-  background-color: #ff4081;  /* Pink background for the current day */
+  background-color: #ff4081; /* Pink background for the current day */
   color: white;
 }
 
 /* Selected Day */
 .react-calendar__tile--active {
-  background-color: #4caf50;  /* Green background for selected day */
+  background-color: #4caf50; /* Green background for selected day */
   color: white;
 }
 
@@ -365,39 +366,39 @@
   background-color: red;
   color: black; /* Adjust text color if needed */
 }
-.allFinishedB4{
+.allFinishedB4 {
   background-color: green;
   color: black;
 }
-.allFailB4{
+.allFailB4 {
   background-color: brown;
   color: black;
 }
-.someFinishedB4{
+.someFinishedB4 {
   background-color: rgb(172, 220, 39);
   color: black;
 }
-.allFinishedToday{
+.allFinishedToday {
   background-color: rgb(8, 141, 112);
   color: black;
 }
-.allFailToday{
+.allFailToday {
   background-color: rgb(21, 54, 54);
   color: black;
 }
-.someFinishedToday{
+.someFinishedToday {
   background-color: rgb(45, 122, 106);
   color: black;
 }
-.allFinishedAfter{
+.allFinishedAfter {
   background-color: rgb(232, 78, 224);
   color: black;
 }
-.allFailAfter{
+.allFailAfter {
   background-color: rgb(66, 8, 59);
   color: black;
 }
-.someFinishedAfter{
+.someFinishedAfter {
   background-color: rgb(141, 100, 141);
   color: black;
 }

@@ -1,30 +1,9 @@
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Modal from "../../components/Modal";
-function Cal() {
-  const [tasks, setTasks] = useState([]);
+function Cal({ tasks }) {
   const [taskInfo, setShowTaskInfo] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    const res = await fetch("http://localhost:8080/Task", {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (res.status === 200) {
-      const data = await res.json();
-      console.log("received data");
-      console.log(data);
-      setTasks(data.tasks);
-    } else {
-      setTasks([]);
-    }
-  };
 
   const findTaskByDate = (date) => {
     return tasks.filter((task) => {
@@ -78,7 +57,6 @@ function Cal() {
 
   return (
     <div id="calendar-container">
-      <button onClick={fetchTasks}>Refresh</button>
       <Calendar
         tileClassName={({ date, view }) => {
           // Check if current date is in special dates array
@@ -195,7 +173,7 @@ function Cal() {
           )}{" "}
         </Modal>
       )}
-    {/* </Modal> */}
+      {/* </Modal> */}
     </div>
   );
 }
