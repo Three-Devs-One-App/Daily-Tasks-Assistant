@@ -185,6 +185,8 @@
   grid-template-columns: 2fr 4fr 2fr;
 }
 
+/* BLOCK 3 */
+
 #block3 {
   height: 100vh;
   display: flex;
@@ -276,6 +278,7 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
+  z-index: 50;
 }
 
 #modal_wrapper {
@@ -284,14 +287,36 @@
   height: 90%;
   background-color: #66ffff;
 }
+
+#task-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ender {
+  margin-bottom: 1rem;
+}
+
+/* BLOCK 2 */
+
+#block2 {
+  display: grid;
+  grid-template-rows: 2fr 4fr;
+}
+
 /* Adjust the overall size of the calendar */
 .react-calendar {
-  width: 50%; /* Adjust as needed */
+  width: 95%; /* Adjust as needed */
+  height: 95%;
   max-width: 100%;
   background: rgb(239, 135, 232);
   border: 1px solid #a0a095;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Adjust the individual tile (day) size */
@@ -312,4 +337,14 @@
 
 #task_Modal {
   background-color: yellow;
+}
+
+#block1 {
+  display: grid;
+  background-color: red;
+}
+
+#graphContainer {
+  width: 25%;
+  background-color: #66ffff;
 }

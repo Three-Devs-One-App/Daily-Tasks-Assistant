@@ -208,11 +208,11 @@ const TaskViewEdit = ({ task, closeModal, setPage, taskUpdated }) => {
   const viewItems = (
     <>
       <h1>Title: </h1>
-      <h1>{task.title}</h1>
+      <h2 className="ender">{task.title}</h2>
       <h1>Description:</h1>
-      <h1>{task.description}</h1>
+      <p className="ender">{task.description}</p>
       <h1>Due Date:</h1>
-      <h1>{task.due_date.toLocaleString()}</h1>
+      <h3 className="ender">{task.due_date.toLocaleString()}</h3>
     </>
   );
 

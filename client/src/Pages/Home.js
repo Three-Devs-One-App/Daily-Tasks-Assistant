@@ -34,8 +34,17 @@ function Home({ setPage, setLoggedIn }) {
 
   return (
     <div className="Page" id="profile_page">
-      <div id="block1"></div>
-      <div id="block2"></div>
+      <div id="block1">
+        <div></div>
+
+        <GraphicalAnalysis />
+
+        <div></div>
+      </div>
+      <div id="block2">
+        <div></div>
+        <Cal />
+      </div>
       <div id="block3">
         <TaskManager setPage={setPage} />
       </div>
