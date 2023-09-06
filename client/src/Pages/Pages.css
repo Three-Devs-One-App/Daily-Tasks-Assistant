@@ -309,6 +309,11 @@
   grid-template-rows: 2fr 4fr;
 }
 
+#calendar-container {
+  width: 100%;
+  height: 100%;
+}
+
 /* Adjust the overall size of the calendar */
 .react-calendar {
   width: 95%; /* Adjust as needed */
@@ -379,7 +384,6 @@
 
 #block1 {
   display: grid;
-  background-color: red;
 }
 
 #graphContainer {

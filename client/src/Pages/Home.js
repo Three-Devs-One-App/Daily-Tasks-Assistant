@@ -37,7 +37,7 @@ function Home({ setPage, setLoggedIn }) {
       <div id="block1">
         <div></div>
 
-        <GraphicalAnalysis />
+        {/* <GraphicalAnalysis /> */}
 
         <div></div>
       </div>
