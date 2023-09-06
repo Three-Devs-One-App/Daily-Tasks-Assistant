@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import Modal from "../../components/Modal";
 function Cal() {
   const [tasks, setTasks] = useState([]);
   const [taskInfo, setShowTaskInfo] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -145,42 +147,53 @@ function Cal() {
           if (tasksOnThisDate.length > 0) {
             console.log("tasks set");
             setShowTaskInfo(tasksOnThisDate);
+            setOpenModal(true);
           }
         }}
       />
-
-      {taskInfo && taskInfo.length > 0 && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "10px",
-            border: "1px solid black",
-            width: "200px",
-          }}
-        >
-          {taskInfo.map((task, index) => (
+      {openModal && (
+        <Modal>
+          {taskInfo && taskInfo.length > 0 && (
             <div
-              id="task_Modal"
-              key={index}
               style={{
-                backgroundColor: task.on_time === true ? "pink" : "yellow",
+                marginTop: "20px",
+                padding: "10px",
+                border: "1px solid black",
+                width: "200px",
               }}
             >
-              <strong>Title:</strong> {task.title}
-              <br />
-              <strong>Description:</strong> {task.description}
-              <br />
-              <strong>Finished:</strong>{" "}
-              {task.on_time === null
-                ? "Not Yet"
-                : task.on_time === false
-                ? "False"
-                : "True"}
-              <hr />
+              {taskInfo.map((task, index) => (
+                <div
+                  id="task_Modal"
+                  key={index}
+                  style={{
+                    backgroundColor: task.on_time === true ? "pink" : "yellow",
+                  }}
+                >
+                  <strong>Title:</strong> {task.title}
+                  <br />
+                  <strong>Description:</strong> {task.description}
+                  <br />
+                  <strong>Finished:</strong>{" "}
+                  {task.on_time === null
+                    ? "Not Yet"
+                    : task.on_time === false
+                    ? "False"
+                    : "True"}
+                  <hr />
+                </div>
+              ))}
+              <button
+                onClick={() => {
+                  setShowTaskInfo(null);
+                  setOpenModal(false);
+                }}
+              >
+                Close
+              </button>
             </div>
-          ))}
-          <button onClick={() => setShowTaskInfo(null)}>Close</button>
-        </div>
+          )}{" "}
+        </Modal>
       )}
     </div>
   );

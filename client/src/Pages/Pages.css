@@ -314,6 +314,10 @@
   height: 100%;
 }
 
+#modal_overlay {
+  z-index: 50;
+}
+
 /* Adjust the overall size of the calendar */
 .react-calendar {
   width: 95%; /* Adjust as needed */
