@@ -78,7 +78,9 @@ function Cal() {
 
   return (
     <div id="calendar-container">
+      <button id="RefreshButton"onClick={fetchTasks}>Refresh</button>
       <Calendar
+      
         className="calendar"
         tileClassName={({ date, view }) => {
           // Check if current date is in special dates array
@@ -151,7 +153,6 @@ function Cal() {
           }
         }}
       />
-      {/* <button onClick={fetchTasks}>Refresh</button> */}
       {openModal && (
         <Modal>
           {taskInfo && taskInfo.length > 0 && (
