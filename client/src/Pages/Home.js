@@ -5,6 +5,8 @@ import GraphicalAnalysis from "./HomeComponents/Graphical_Analysis";
 import { useState } from "react";
 function Home({ setPage, setLoggedIn }) {
   const [updatedTask, setUpdatedTask] = useState(false);
+  const taskUpdated = () => setUpdatedTask((updatedTask) => !updatedTask);
+
   const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
@@ -27,8 +29,6 @@ function Home({ setPage, setLoggedIn }) {
     };
     fetchTasks();
   }, [updatedTask]);
-
-  const taskUpdated = () => setUpdatedTask((updatedTask) => !updatedTask);
 
   const handleClickLogout = () => {
     fetch("http://localhost:8080/Logout", {
@@ -64,7 +64,7 @@ function Home({ setPage, setLoggedIn }) {
       <div id="block1">
         <div></div>
 
-        {/* <GraphicalAnalysis /> */}
+        <GraphicalAnalysis />
 
         <div></div>
       </div>

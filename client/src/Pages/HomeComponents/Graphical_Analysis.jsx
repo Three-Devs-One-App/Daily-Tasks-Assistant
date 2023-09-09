@@ -62,17 +62,7 @@ function GraphicalAnalysis() {
 
   return (
     <div id="graphContainer">
-      <BarChart
-        width={600}
-        height={300}
-        data={chartData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
+      <BarChart width={400} height={300} data={chartData} id="barChart">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />

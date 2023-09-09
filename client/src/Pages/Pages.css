@@ -357,6 +357,20 @@
   max-height: 25%;
 }
 
+#block1 {
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+}
+#graphContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9ddbf8;
+}
+#barChart {
+  padding-right: 3rem;
+}
+
 /* Highlight the current day */
 .react-calendar__tile--now {
   background: rgb(24, 118, 155); /* Change to your desired color */
