@@ -235,19 +235,33 @@
   height: 15rem;
   width: 45rem;
   position: absolute;
-  display: block;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
   margin-top: 1rem;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.main-task h1 {
-  font-size: 32px;
+.main-task-info {
 }
 
-.main-task p {
-  margin-bottom: 1rem;
+.main-task-info-dd {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  height: 60%;
+}
+
+.main-task-info-dd p {
+  height: 8rem;
+  overflow-y: auto;
+}
+
+.main-task-button {
+}
+
+.main-task h1 {
+  font-size: 32px;
 }
 
 .due_label {

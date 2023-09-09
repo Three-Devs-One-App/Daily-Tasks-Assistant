@@ -104,8 +104,10 @@ const MainTask = ({ task, openModal, removeTask, completedTask }) => {
         <h1>{task.title}</h1>
         <div className="main-task-info-dd">
           <p>{task.description}</p>
-          <h2 className="due_label">Due On: </h2>
-          <h2>{task.due_date.toLocaleString()}</h2>
+          <div>
+            <h2 className="due_label">Due On: </h2>
+            <h2>{task.due_date.toLocaleString()}</h2>
+          </div>
         </div>
       </div>
       <div className="main-task-button">
