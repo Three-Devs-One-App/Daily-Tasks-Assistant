@@ -42,8 +42,9 @@ function Home({ setPage, setLoggedIn }) {
         <div></div>
       </div>
       <div id="block2">
-        <div></div>
+        <div className="calendar-container">
         <Cal />
+        </div>
       </div>
       <div id="block3">
         <TaskManager setPage={setPage} />
