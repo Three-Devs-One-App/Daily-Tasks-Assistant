@@ -325,9 +325,12 @@
 }
 
 #calendar-container {
-  display: grid;
-  place-items: end center; /* Align to the bottom and center */
-  height: 100vh; /* Full height of the view-port */
+  place-items: end center; 
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #modal_overlay {
@@ -339,7 +342,6 @@
 .react-calendar {
   width: 77%; /* Adjust as needed */
   height: 60%;
-  background: rgb(237, 193, 234);
   font-family: Arial, Helvetica, sans-serif;
 }
 
