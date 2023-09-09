@@ -8,9 +8,20 @@ import {
 import Modal from "../../components/Modal";
 import toast from "react-hot-toast";
 
-const TaskManager = ({ setPage, tasks, taskUpdated }) => {
+const TaskManager = ({ setPage, allTasks, taskUpdated }) => {
+  const [tasks, setTasks] = useState();
   const [taskPage, setTaskPage] = useState("Tasks");
   const [modalIdx, setModalIdx] = useState(-1);
+
+  useEffect(() => {
+    if (allTasks) {
+      const newTasks = allTasks.filter((task) => {
+        return task.on_time === null;
+      });
+      newTasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+      setTasks(newTasks);
+    }
+  }, [allTasks]);
 
   const closeModal = () => setModalIdx(-1);
 

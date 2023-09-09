@@ -18,10 +18,7 @@ function Home({ setPage, setLoggedIn }) {
 
       if (res.status === 200) {
         const data = await res.json();
-        const tasks = data.tasks.filter((task) => {
-          return task.on_time === null;
-        });
-        tasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+        const tasks = data.tasks;
         setTasks(tasks);
       } else {
         setTasks([]);
@@ -76,7 +73,7 @@ function Home({ setPage, setLoggedIn }) {
       </div>
       <div id="block3">
         <TaskManager
-          tasks={tasks}
+          allTasks={tasks}
           setPage={setPage}
           taskUpdated={taskUpdated}
         />
