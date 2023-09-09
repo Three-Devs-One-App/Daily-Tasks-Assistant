@@ -232,6 +232,9 @@
 }
 
 .main-task {
+  height: 15rem;
+  overflow: hidden;
+  overflow-y: scroll;
   width: 45rem;
   position: absolute;
   display: block;
@@ -290,15 +293,42 @@
   height: 90%;
   background-color: #66ffff;
 }
+
+#task-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ender {
+  margin-bottom: 1rem;
+}
+
+/* BLOCK 2 */
+
+#block2 {
+  display: grid;
+  grid-template-rows: 2fr 4fr;
+}
+
+#calendar-container {
+  display: grid;
+  place-items: end center; /* Align to the bottom and center */
+  height: 100vh; /* Full height of the view-port */
+}
+
+#modal_overlay {
+  z-index: 50;
+}
+
 /* Adjust the overall size of the calendar */
 /* Container Styling */
 .react-calendar {
-  position: relative;
-  max-width: 90%; /* Taking the full width of the parent container */
-  background: #f5f5f5; /* Light Grey background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
-  overflow: hidden; /* Hide any child elements protruding out */
+  width: 77%; /* Adjust as needed */
+  height: 60%;
+  background: rgb(237, 193, 234);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Header - Navigation Buttons and Labels */
@@ -353,22 +383,7 @@
 }
 /* Adjust the individual tile (day) size */
 .react-calendar__tile {
-  max-width: 10%; /* Adjust as needed */
-  max-height: 25%;
-}
-
-#block1 {
-  display: grid;
-  grid-template-rows: 1fr 2fr 1fr;
-}
-#graphContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #9ddbf8;
-}
-#barChart {
-  padding-right: 3rem;
+  height: 3rem;
 }
 
 /* Highlight the current day */

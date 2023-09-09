@@ -129,6 +129,7 @@ function Cal({ tasks }) {
           }
         }}
       />
+      {/* <button onClick={fetchTasks}>Refresh</button> */}
       {openModal && (
         <Modal>
           {taskInfo && taskInfo.length > 0 && (
