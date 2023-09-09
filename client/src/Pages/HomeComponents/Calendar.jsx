@@ -58,6 +58,7 @@ function Cal({ tasks }) {
   return (
     <div id="calendar-container">
       <Calendar
+        className="calendar"
         tileClassName={({ date, view }) => {
           // Check if current date is in special dates array
           const tasksOnThisDate = findTaskByDate(date);

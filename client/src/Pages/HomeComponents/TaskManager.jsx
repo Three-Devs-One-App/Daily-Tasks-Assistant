@@ -100,12 +100,19 @@ const TaskManager = ({ setPage, tasks, taskUpdated }) => {
 const MainTask = ({ task, openModal, removeTask, completedTask }) => {
   return (
     <div className="main-task task">
-      <h1 onClick={openModal}>{task.title}</h1>
-      <p>{task.description}</p>
-      <h2 className="due_label">Due On: </h2>
-      <h2>{task.due_date.toLocaleString()}</h2>
-      <button onClick={completedTask}>o</button>
-      <button onClick={removeTask}>-</button>
+      <div className="main-task-info">
+        <h1>{task.title}</h1>
+        <div className="main-task-info-dd">
+          <p>{task.description}</p>
+          <h2 className="due_label">Due On: </h2>
+          <h2>{task.due_date.toLocaleString()}</h2>
+        </div>
+      </div>
+      <div className="main-task-button">
+        <button onClick={completedTask}>O</button>
+        <button onClick={removeTask}>-</button>
+        <button onClick={openModal}>E</button>
+      </div>
     </div>
   );
 };

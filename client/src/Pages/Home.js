@@ -62,7 +62,9 @@ function Home({ setPage, setLoggedIn }) {
   return (
     <div className="Page" id="profile_page">
       <div id="block1">
-        <div></div>
+        <div>
+          <button onClick={handleClickLogout}>Logout</button>
+        </div>
 
         <GraphicalAnalysis />
 
