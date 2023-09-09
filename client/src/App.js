@@ -32,7 +32,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div className="App" >
       <Toaster />
       {!loggedIn && Page === "" && <IntroPage setPage={setPage} />}
       {!loggedIn && Page === "SignUp" && <SignUp setPage={setPage} />}

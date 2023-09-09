@@ -242,18 +242,12 @@
   transform: translateX(-50%);
 }
 
-.main-task-info-dd {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-}
-
 .main-task h1 {
   font-size: 32px;
 }
 
 .main-task p {
-  height: 5rem;
-  overflow-y: auto;
+  margin-bottom: 1rem;
 }
 
 .due_label {

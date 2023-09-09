@@ -53,7 +53,7 @@ function GraphicalAnalysis() {
     });
 
     setChartData([
-      { name: "Within 1 week", Completed: counts[3] },
+      { name: "Within 1W", Completed: counts[3] },
       { name: "2 Week ago", Completed: counts[2] },
       { name: "3 Week ago", Completed: counts[1] },
       { name: "4 Week ago", Completed: counts[0] },
